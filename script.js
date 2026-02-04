@@ -23,9 +23,9 @@
 //   3. The status message area (id="status")
 // --------------------------------------------
 
-const textBox = 
-const outputBox = 
-const statusBox = 
+const textBox = document.querySelector("#user-input")
+const outputBox = document.querySelector("#quiz-outputs");
+const statusBox = document.querySelector("#status");
 
 // This console.log helps us verify our selections worked correctly.
 // Open the browser's Developer Tools (F12) to see the output.
@@ -43,8 +43,8 @@ console.log(textBox, outputBox, statusBox);
 //   2. A "bonus" variable (boolean) initialized to false
 // --------------------------------------------
 
-let score = 
-let champlain = 
+let score = 0
+let champlain = false;
 
 // --------------------------------------------
 // STEP 3: CREATE THE ANSWER-CHECKING FUNCTION
@@ -62,7 +62,7 @@ let champlain =
 
 const checkAnswer = () => {
   // Get the current value from the text input
-  const currentAnswer = textBox.value;
+const currentAnswer = textBox.value.trim();
   console.log("Checking", currentAnswer);
 
   // TODO: Create if/else if/else statements to check for each Great Lake.
@@ -73,19 +73,27 @@ const checkAnswer = () => {
   //   - Display an error message in the statusBox
 
   if (currentAnswer === "Lake Superior" || currentAnswer === "Superior") {
-
+  outputBox.innerHTML += `<h3>Lake Superior</h3><p>Largest freshwater lake by surface area!</p>`;
+    score++;
   } else if (currentAnswer === "Lake Michigan" || currentAnswer === "Michigan") {
-   
+   outputBox.innerHTML += `<h3>Lake Michigan</h3><p>The only Great Lake entirely in the U.S.</p>`;
+    score++;
   } else if (currentAnswer === "Lake Huron" || currentAnswer === "Huron") {
-  
+  outputBox.innerHTML += `<h3>Lake Huron</h3><p>Has the longest shoreline of the Great Lakes.</p>`;
+    score++;
   } else if (currentAnswer === "Lake Erie" || currentAnswer === "Erie") {
-    
+    outputBox.innerHTML += `<h3>Lake Erie</h3><p>The shallowest of the Great Lakes.</p>`;
+    score++;
   } else if (currentAnswer === "Lake Ontario" || currentAnswer === "Ontario") {
-
+outputBox.innerHTML += `<h3>Lake Ontario</h3><p>The smallest Great Lake by surface area.</p>`;
+    score++;
   } else if (currentAnswer === "Lake Champlain" || currentAnswer === "Champlain") {
     // Secret bonus answer!
-  
+  outputBox.innerHTML += `<h3>Bonus lake found 🥳!</h3><p>Lake Champlain is a 120-mile-long freshwater lake bordering Vermont, New York, and Quebec.</p>`;
+    score++;
   } else {
+    statusBox.textContent = "Not a Great Lake. Try again.";
+  
     // If no conditions match, show an error message
     
   }
@@ -110,11 +118,11 @@ const checkAnswer = () => {
 // --------------------------------------------
 
 const checkScore = () => {
-  if (score === 5) {
- 
-  }
   if (score === 5 && champlain) {
-    
+     statusBox.textContent = "You found all five Great Lakes and the bonus lake!";
+         textBox.disabled = true;
+   } else if (score === 5) {
+  statusBox.textContent = "You found all five Great Lakes."; 
     // Disable the text box since the game is complete
     
   }
@@ -137,4 +145,4 @@ const checkScore = () => {
 //   - Listens for the "change" event
 //   - Calls the checkAnswer function when triggered
 // --------------------------------------------
-
+textBox.addEventListener("change", checkAnswer);
